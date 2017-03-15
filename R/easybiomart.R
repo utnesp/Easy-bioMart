@@ -1470,7 +1470,7 @@ reactome.ensg <- function(ensg.diff.exp, biomart = mart, pvalueCutoff=0.05, read
 #' @param input
 #' @keywords 
 #' @export
-#' @import biomaRt
+#' @import biomaRt, limma
 #' @examples
 #' goana.ensg()
 
@@ -1540,7 +1540,7 @@ goana.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart, pval = 
 #' @param input
 #' @keywords 
 #' @export
-#' @import biomaRt
+#' @import biomaRt, limma
 #' @examples
 #' kegga.ensg()
 
@@ -1559,7 +1559,7 @@ kegga.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
 #' @param input
 #' @keywords 
 #' @export
-#' @import biomaRt
+#' @import biomaRt, ReactomePA
 #' @examples
 #' reactome.ext_name()
 
@@ -1614,7 +1614,7 @@ reactome.ext_name <- function(ext_name.diff.exp, return.annotated.counts = F, ra
 #' @param input
 #' @keywords 
 #' @export
-#' @import biomaRt
+#' @import biomaRt, limma
 #' @examples
 #' goana.ext_name()
 
@@ -1633,7 +1633,7 @@ goana.ext_name<- function(ext_name.diff.exp, ensg.universe = F, biomart = mart) 
 #' @param input
 #' @keywords 
 #' @export
-#' @import biomaRt
+#' @import biomaRt, limma
 #' @examples
 #' kegga.ext_name()
 
