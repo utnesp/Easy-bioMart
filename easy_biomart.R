@@ -137,6 +137,8 @@ getUpstream <- function(input, bp_upstream = 2000, which.mart = mart, which.type
 }
 
 hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) hgnc <- row.names(hgnc)
+    
     df <- res <- getBM(
         filters= "hgnc_symbol",
         attributes= c("hgnc_symbol", "ensembl_gene_id"),
@@ -145,13 +147,20 @@ hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -163,6 +172,8 @@ hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_
 }
 
 ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ext_name <- row.names(ext_name)
+    
     df <- getBM(
         filters= "external_gene_name",
         attributes= c("external_gene_name", "ensembl_gene_id"),
@@ -171,13 +182,20 @@ ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x 
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -189,6 +207,8 @@ ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x 
 }
 
 ext_name2chr_band <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ext_name <- row.names(ext_name)
+    
     df <- getBM(
         filters= "external_gene_name",
         attributes= c("external_gene_name", "chromosome_name", "band"),
@@ -197,13 +217,20 @@ ext_name2chr_band <- function(ext_name, biomart = mart, combine = F, df2 = "", b
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -231,13 +258,20 @@ ext_name2chr_band_df <- function(df, biomart = mart, combine = F, df2 = "", by.x
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -249,6 +283,8 @@ ext_name2chr_band_df <- function(df, biomart = mart, combine = F, df2 = "", by.x
 }
 
 goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) goid <- row.names(goid)
+    
     df <- getBM(
         filters= "go_id",
         attributes= c("go_id", "name_1006"),
@@ -257,13 +293,20 @@ goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -275,6 +318,8 @@ goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_
 }
 
 goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) goid <- row.names(goid)
+    
     df <- getBM(
         filters= "go_id",
         attributes= c("go_id", "ensembl_gene_id", "external_gene_name", "gene_biotype"),
@@ -283,13 +328,20 @@ goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -301,6 +353,8 @@ goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "
 }
 
 goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) goid <- row.names(goid)
+    
     df <- getBM(filters= "go_id",
                 attributes= c("go_id", "ensembl_gene_id", "external_gene_name", "gene_biotype", "go_linkage_type"),
                 values= goid,
@@ -308,13 +362,20 @@ goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combin
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -326,6 +387,8 @@ goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combin
 }
 
 enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_transcript_id",
         attributes= c("ensembl_gene_id", "ensembl_transcript_id"),
@@ -334,13 +397,20 @@ enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -352,6 +422,8 @@ enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
 }
 
 ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "hgnc_symbol"),
@@ -369,13 +441,21 @@ ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -386,7 +466,11 @@ ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
     }
 }
 
+
+
 ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = T) {
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "source", "status"),
@@ -395,13 +479,20 @@ ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -413,6 +504,7 @@ ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
 }
 
 ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
     
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -422,13 +514,20 @@ ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -440,6 +539,8 @@ ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
 }
 
 ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F, as.IGV = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "chromosome_name", "start_position", "end_position", "strand", "band"),
@@ -455,13 +556,20 @@ ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -473,6 +581,8 @@ ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
 }
 
 ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "description"),
@@ -481,13 +591,20 @@ ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x =
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -499,7 +616,9 @@ ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x =
 }
 
 ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
-    df <- getBM(
+   if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+   
+   df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "uniprot_sptrembl", "uniprot_swissprot"),
         values= ensg,
@@ -507,13 +626,20 @@ ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "en
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -525,6 +651,7 @@ ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "en
 }
 
 uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, combine = F, df2 = "", by.x = "uniprot_swissprot", by.y = "uniprot_swissprot", all = F) {
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) uniprot_swissprot <- row.names(uniprot_swissprot)
     
     if (useSwissprot == T) {
         print("Using Swiss-Prot, a manually annotated and reviewed database")
@@ -536,13 +663,20 @@ uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, co
         
         if (combine == T) {
             if (df2 == "") {
-                # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-                # df2 is the first argument passed to this function:
+                if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
                 df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
                 # by.y is the column selected in the first argument sent to this function
                 by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
                 
                 df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
                 return(df.anno)
             } else {
                 df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -564,13 +698,20 @@ uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, co
         
         if (combine == T) {
             if (df2 == "") {
-                # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-                # df2 is the first argument passed to this function:
+                if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
                 df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
                 # by.y is the column selected in the first argument sent to this function
                 by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
                 
                 df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
                 return(df.anno)
             } else {
                 df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -606,13 +747,20 @@ uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, co
         
         if (combine == T) {
             if (df2 == "") {
-                # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-                # df2 is the first argument passed to this function:
+                if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
                 df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
                 # by.y is the column selected in the first argument sent to this function
                 by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
                 
                 df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
                 return(df.anno)
             } else {
                 df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -625,6 +773,8 @@ uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, co
 }
     
 agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "", by.x = "efg_agilent_wholegenome_4x44k_v1", by.y = "efg_agilent_wholegenome_4x44k_v1", all = F) {
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) probe_id <- row.names(probe_id)
+    
     df <- getBM(
         filters= "efg_agilent_wholegenome_4x44k_v1",
         attributes= c("ensembl_gene_id", "external_gene_id", ),
@@ -633,13 +783,20 @@ agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "",
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -651,6 +808,8 @@ agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "",
 }
 
 ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "hgnc_symbol", "go_id", "name_1006", "namespace_1003"),
@@ -667,13 +826,20 @@ ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -685,6 +851,8 @@ ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl
 }
 
 hugo2GO <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ext_name <- row.names(ext_name)
+    
     df <- getBM(
         filters= "external_gene_name",
         attributes= c("external_gene_name", "name_1006", "namespace_1003"),
@@ -693,13 +861,20 @@ hugo2GO <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "ext
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -730,6 +905,8 @@ ensg2entrez_fc <- function(df, ensg_col = row.names(df), fc_col = "log2FC", biom
 }
 
 exon2ensg.is_constitutive <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
+    
     df <- getBM(
         filters= "ensembl_exon_id",
         attributes= c("ensembl_exon_id", "ensembl_gene_id", "is_constitutive"),
@@ -738,13 +915,20 @@ exon2ensg.is_constitutive <- function(ense_id, biomart = mart, combine = F, df2 
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -756,6 +940,8 @@ exon2ensg.is_constitutive <- function(ense_id, biomart = mart, combine = F, df2 
 }
 
 exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
+    
     df <- getBM(
         filters= "ensembl_exon_id",
         attributes= c("ensembl_exon_id", "ensembl_gene_id", "transcript_gencode_basic"),
@@ -764,11 +950,20 @@ exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", b
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
             return(df.anno)
@@ -782,7 +977,9 @@ exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", b
 }
 
 exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
-    df <- getBM(
+   if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
+   
+   df <- getBM(
         filters= "ensembl_exon_id",
         attributes= c("ensembl_exon_id", "ensembl_gene_id", "transcript_appris"),
         values= ense_id,
@@ -790,13 +987,20 @@ exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -808,6 +1012,7 @@ exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "
 }
 
 exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
     df <- getBM(
         filters= "ensembl_exon_id",
         attributes= c("ensembl_exon_id", "ensembl_gene_id"),
@@ -817,13 +1022,20 @@ exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "en
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -835,6 +1047,7 @@ exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "en
 }
 
 ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "gene_biotype"),
@@ -844,13 +1057,20 @@ ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x 
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -862,22 +1082,30 @@ ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x 
 }
 
 ensg2ext_name <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "external_gene_name"),
         values= ensg,
         mart = biomart)
     
-    
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -889,6 +1117,8 @@ ensg2ext_name <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
 }
 
 ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "external_gene_name", "gene_biotype"),
@@ -897,13 +1127,20 @@ ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -915,6 +1152,8 @@ ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
 }
 
 enst2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
+    
     df <- getBM(
         filters= "ensembl_transcript_id",
         attributes= c("ensembl_transcript_id", "transcript_biotype", "external_transcript_name", "external_gene_name", "gene_biotype"),
@@ -923,13 +1162,20 @@ enst2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1101,7 +1347,8 @@ kegga.ext_name <- function(ext_name.diff.exp, ensg.universe = F, biomart = mart)
 
 entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F)
 {
-    getBM(
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) entrez_ids <- row.names(entrez_ids)
+    df <- getBM(
         filters= "entrezgene",
         attributes= c("entrezgene", "external_gene_name"),
         values= entrez_ids,
@@ -1109,13 +1356,21 @@ entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", b
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
-
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1128,6 +1383,7 @@ entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", b
 
 entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F)
 {
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) entrez_ids <- row.names(entrez_ids)
     df <- getBM(
         filters= "entrezgene",
         attributes= c("entrezgene", "ensembl_gene_id"),
@@ -1137,13 +1393,20 @@ entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x 
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1155,6 +1418,7 @@ entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x 
 }
 
 hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) hgnc <- row.names(hgnc)
     df <- getBM(
         filters= "hgnc_symbol",
         attributes= c("hgnc_symbol", "entrezgene"),
@@ -1163,13 +1427,20 @@ hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgn
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1181,6 +1452,7 @@ hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgn
 }
 
 ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ENSG_v82 <- row.names(ENSG_v82)
     
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -1190,13 +1462,20 @@ ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = 
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1209,6 +1488,7 @@ ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = 
 }
 
 ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) external_gene_name <- row.names(external_gene_name)
     
     df <- getBM(
         filters= "external_gene_name",
@@ -1218,13 +1498,20 @@ ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1237,6 +1524,7 @@ ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2
 }
 
 entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F){
+    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) entrez_ids <- row.names(entrez_ids)
     
     df <- getBM(
         filters= "entrezgene",
@@ -1246,13 +1534,20 @@ entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", b
     
     if (combine == T) {
         if (df2 == "") {
-            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
-            # df2 is the first argument passed to this function:
-            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
-            # by.y is the column selected in the first argument sent to this function
-            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {  
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
             
-            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+                
+            } else {
+                
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+                
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
             return(df.anno)
         } else {
             df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
@@ -1263,8 +1558,3 @@ entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", b
     }
     
 }
-
-
-    
-
-    
