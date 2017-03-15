@@ -1,3 +1,14 @@
+# Author: Peter Utnes
+# Date: 2017-03-17
+# Modified: 2017-03-17
+# Description: Provide some functions to make biomart easier to handle
+# Packages Used: biomaRt
+# Blog Reference: Not published
+
+# Copyright (c) 20117 under the Creative Commons Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) License
+# For more information see: https://creativecommons.org/licenses/by-nc/3.0/
+# All rights reserved.
+
 library(biomaRt)
 
 # intialize mart if not existent to be used with the functions
