@@ -1,4 +1,4 @@
-Package: easy_biomart
+Package: easybiomart
 Type: Package
 Title: Provide some functions to make biomart easier to handle
 Version: 0.1
