@@ -1,0 +1,14 @@
+Package: easy_biomart
+Type: Package
+Title: Provide some functions to make biomart easier to handle
+Version: 0.1
+Date: 2017-03-15
+Author: c(person("Peter", "Utnes", email = "utnesp@gmail.com",
+    role = c("aut", "cre")))
+Maintainer: Peter Utnes <utnesp@gmail.com>
+Description: Provide some functions to make biomart easier to handle
+License: GPL-2
+LazyData: TRUE
+Imports: biomaRt
+URL: http://github.com/utnesp/Easy-bioMart
+BugReports: http://github.com/utnesp/Easy-bioMart/issues
