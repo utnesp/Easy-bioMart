@@ -1,14 +1,10 @@
 Package: easybiomart
-Type: Package
-Title: Provide some functions to make biomart easier to handle
-Version: 0.1
-Date: 2017-03-15
-Author: c(person("Peter", "Utnes", email = "utnesp@gmail.com",
-    role = c("aut", "cre")))
-Maintainer: Peter Utnes <utnesp@gmail.com>
-Description: Provide some functions to make biomart easier to handle
-License: GPL-2
-LazyData: TRUE
-Imports: biomaRt
-URL: http://github.com/utnesp/Easy-bioMart
-BugReports: http://github.com/utnesp/Easy-bioMart/issues
+Title: What the Package Does (one line, title case)
+Version: 0.0.0.9000
+Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+Depends: R (>= 3.3.2)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1.9000
