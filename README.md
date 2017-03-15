@@ -1,6 +1,14 @@
 # Easy-bioMart
 Provide some functions to make biomart easier to handle
 
+# Installation
+```R
+library(devtools)
+devtools::install_github("utnesp/Easy-bioMart")
+```
+
+# User guide
+
 The first step would be to initialize a mart:
 
 ```R
