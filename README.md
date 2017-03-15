@@ -9,15 +9,36 @@ devtools::install_github("utnesp/Easy-bioMart")
 
 # User guide
 
+## Init mart(s)
+
 The first step would be to initialize a mart:
 
 ```R
+# Default mart:
 if ( exists("mart") == "FALSE") {
-    mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
+    latestMart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
 }
 ```
 
-The you can use all the functions:
+Alternative mirrors:
+```R
+## GRCh38.p3
+mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="jul2015.archive.ensembl.org")
+## Sometimes biomart is down for maintenance, then we can switch to:
+mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="useast.ensembl.org")
+mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="uswest.ensembl.org")
+## Using GRCh37
+mart =  useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org", path="/biomart/martservice" ,dataset="hsapiens_gene_ensembl")
+# GRCh37.p12
+mart =  useMart(host="sep2013.archive.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl") 
+}
+```
+You can connect to different marts, by changing host="" with some of the marts found [here](http://www.ensembl.org/info/website/archives/index.html).
+
+
+
+## Using the functions
+
 ```R
 > ensg2ext_name_biotype("ENSG00000136997", biomart = mart)
   ensembl_gene_id external_gene_name   gene_biotype
