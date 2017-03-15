@@ -2,28 +2,28 @@ library(biomaRt)
 
 # intialize mart if not existent to be used with the functions
 if ( exists("mart") == "FALSE") {
-    mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="jul2015.archive.ensembl.org")
+    mart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
 }
 
-if ( exists("latestMart") == "FALSE") {
-    latestMart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
-}
+### sometimes we would like to use other marts, then you can try:
+# if ( exists("GRCh38.p3") == "FALSE") {
+#    GRCh38.p3 =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="jul2015.archive.ensembl.org")
+# }
 
-## sometimes the biomart servers may be down, then we can try alternate mirrors
+### sometimes the biomart servers may be down, then we can try alternate mirrors
 # if ( exists("mart.useast") == "FALSE") {
 #     mart.useast =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="useast.ensembl.org")
 # }
-
+### OR:
 # if ( exists("mart.uswest") == "FALSE") {
 #    mart.uswest =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="uswest.ensembl.org")
 # }
 
-# http://useast.ensembl.org
-# intialize mart for hg19/GRCh37 if not existent to be used with some of the functions
-if ( exists("mart37") == "FALSE") {
-    mart37 =  useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org", path="/biomart/martservice" ,dataset="hsapiens_gene_ensembl")
-    # mart37 <- useMart(host="sep2013.archive.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl") # GRCh37.p12
-}
+### Using GRCh37 / hg 19: 
+# if ( exists("mart37") == "FALSE") {
+#    mart37 =  useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org", path="/biomart/martservice" ,dataset="hsapiens_gene_ensembl")
+#    # mart37 <- useMart(host="sep2013.archive.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl") # GRCh37.p12
+# }
 
 getSequence_cDNA <- function(input, which.mart = mart, which.type = "external_gene_name", which.seq.type = "cdna", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = input, type = which.type, seqType = which.seq.type, mart = which.mart)
