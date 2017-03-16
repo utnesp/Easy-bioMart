@@ -32,9 +32,9 @@ mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="u
 mart =  useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org", path="/biomart/martservice" ,dataset="hsapiens_gene_ensembl")
 # GRCh37.p12
 mart =  useMart(host="sep2013.archive.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl") 
-}
 ```
-You can connect to different marts, by changing host="" with some of the marts found [here](http://www.ensembl.org/info/website/archives/index.html).
+You can connect to different marts, by changing host="" in the above code snippet with some of the marts found [here](http://www.ensembl.org/info/website/archives/index.html).
+
 
 
 
