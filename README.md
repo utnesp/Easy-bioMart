@@ -5,6 +5,7 @@ Provide some functions to make biomart easier to handle
 ```R
 library(devtools)
 devtools::install_github("utnesp/Easy-bioMart")
+library(easybiomart)
 ```
 
 # User guide
