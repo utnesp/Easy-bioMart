@@ -17,7 +17,7 @@ The first step would be to initialize a mart:
 ```R
 # Default mart:
 if ( exists("mart") == "FALSE") {
-    latestMart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
+    mart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
 }
 ```
 
