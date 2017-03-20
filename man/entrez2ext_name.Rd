@@ -18,5 +18,4 @@ Biomart conversion
 }
 \examples{
 entrez2ext_name()
-entrez2ext_name()
 }

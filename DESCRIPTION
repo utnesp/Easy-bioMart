@@ -1,8 +1,8 @@
-Package: corParallell
-Title: Functions for corParallell
+Package: easybiomart
+Title: Functions for easybiomart
 Version: 0.1
 Authors@R: c(person("Peter Utnes", "Developer", role = c("aut", "cre"), email = "utnesp@gmail.com"))
-Description: https://github.com/utnesp/corParallell
+Description: https://github.com/utnesp/easybiomart
 Depends: R (>= 3.3.2)
 License: GPL-3
 Encoding: UTF-8
