@@ -7,8 +7,8 @@
 getSequence_3UTR(ensg, which.mart = mart, which.type = "ensembl_gene_id",
   which.seq.type = "3utr", fasta.output = "")
 }
-\description{
-get 3' UTR sequence
+\arguments{
+\item{input}{input}
 }
 \examples{
 getSequence_3UTR()

@@ -7,8 +7,8 @@
 ext_name2ensg(ext_name, biomart = mart, combine = F, df2 = "",
   by.x = "external_gene_name", by.y = "external_gene_name", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 ext_name2ensg()

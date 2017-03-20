@@ -7,8 +7,8 @@
 reactome.ensg(ensg.diff.exp, biomart = mart, pvalueCutoff = 0.05,
   readable = T)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 reactome.ensg()

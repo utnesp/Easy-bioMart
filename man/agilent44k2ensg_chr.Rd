@@ -8,8 +8,8 @@ agilent44k2ensg_chr(probe_id, biomart = mart, combine = F, df2 = "",
   by.x = "efg_agilent_wholegenome_4x44k_v1",
   by.y = "efg_agilent_wholegenome_4x44k_v1", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 agilent44k2ensg_chr()

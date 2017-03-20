@@ -7,8 +7,8 @@
 ensg2gene_biotype(ensg, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 ensg2gene_biotype()

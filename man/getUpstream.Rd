@@ -8,8 +8,8 @@ getUpstream(input, bp_upstream = 2000, which.mart = mart,
   which.type = "external_gene_name", which.seq.type = "gene_flank",
   fasta.output = "")
 }
-\description{
-get upstream sequence
+\arguments{
+\item{input}{input}
 }
 \examples{
 getUpstream()

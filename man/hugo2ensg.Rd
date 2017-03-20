@@ -7,8 +7,8 @@
 hugo2ensg(hgnc, biomart = mart, combine = F, df2 = "",
   by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F)
 }
-\description{
-Convert hugo names to ensembl gene identifiers
+\arguments{
+\item{input}{input}
 }
 \examples{
 hugo2ensg()

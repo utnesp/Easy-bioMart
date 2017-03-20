@@ -8,8 +8,8 @@ uniprot2ensg(uniprot_swissprot, useSwissprot = T, biomart = mart,
   combine = F, df2 = "", by.x = "uniprot_swissprot",
   by.y = "uniprot_swissprot", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 uniprot2ensg()

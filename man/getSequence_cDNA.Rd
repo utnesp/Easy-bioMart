@@ -8,8 +8,8 @@ getSequence_cDNA(input, which.mart = mart,
   which.type = "external_gene_name", which.seq.type = "cdna",
   fasta.output = "")
 }
-\description{
-get cDNA sequence
+\arguments{
+\item{input}{input}
 }
 \examples{
 getSequence_cDNA()

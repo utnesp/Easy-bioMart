@@ -7,8 +7,8 @@
 goid2goname(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id",
   by.y = "go_id", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 goid2goname()

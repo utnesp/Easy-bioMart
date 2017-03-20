@@ -8,8 +8,8 @@ getSequence_peptide(input, which.mart = mart,
   which.type = "external_gene_name", which.seq.type = "peptide",
   fasta.output = "")
 }
-\description{
-get peptide sequence
+\arguments{
+\item{input}{input}
 }
 \examples{
 getSequence_peptide()

@@ -7,8 +7,8 @@
 entrez2ensg(entrez_ids, biomart = mart, combine = F, df2 = "",
   by.x = "entrezgene", by.y = "entrezgene", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 entrez2ensg()

@@ -8,8 +8,8 @@ ensg2chr_start_end(ensg, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F,
   as.IGV = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 ensg2chr_start_end()

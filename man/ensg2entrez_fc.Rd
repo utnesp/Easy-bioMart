@@ -8,8 +8,8 @@ ensg2entrez_fc(df, ensg_col = row.names(df), fc_col = "log2FC",
   biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id",
   by.y = "ensembl_gene_id", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 ensg2entrez_fc()

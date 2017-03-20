@@ -6,8 +6,8 @@
 \usage{
 \method{kegga}{ensg}(ensg.diff.exp, ensg.universe = F, biomart = mart)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 kegga.ensg()

@@ -7,8 +7,8 @@
 hugo2entrez(hgnc, biomart = mart, combine = F, df2 = "",
   by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 hugo2entrez()

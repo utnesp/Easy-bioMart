@@ -9,8 +9,8 @@ reactome.ext_name(ext_name.diff.exp, return.annotated.counts = F, ranks = 0,
   by.x = "external_gene_name", by.y = "external_gene_name", all = F,
   org = "human", universe = "")
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 reactome.ext_name()

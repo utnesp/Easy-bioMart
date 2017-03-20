@@ -7,8 +7,8 @@
 \method{kegga}{ext_name}(ext_name.diff.exp, ensg.universe = F,
   biomart = mart)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 kegga.ext_name()

@@ -2,7 +2,7 @@
 # if ( exists("mart") == "FALSE") {
 #    mart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
 # }
-
+#
 ## GRCh38.p3
 # mart =  useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl', host="jul2015.archive.ensembl.org")
 ## Sometimes biomart is down for maintenance, then we can switch to:
@@ -12,17 +12,13 @@
 # mart =  useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org", path="/biomart/martservice" ,dataset="hsapiens_gene_ensembl")
 # GRCh37.p12
 # mart =  useMart(host="sep2013.archive.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL", dataset="hsapiens_gene_ensembl")
-
-
-#' get cDNA sequence
-#'
-#' @param input
-#' @keywords
+#
+#
+#' @title get cDNA sequence
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' getSequence_cDNA()
-
+#' @examples getSequence_cDNA()
 getSequence_cDNA <- function(input, which.mart = mart, which.type = "external_gene_name", which.seq.type = "cdna", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = input, type = which.type, seqType = which.seq.type, mart = which.mart)
     return(df.temp)
@@ -42,15 +38,11 @@ getSequence_cDNA <- function(input, which.mart = mart, which.type = "external_ge
     }
 }
 
-#' get peptide sequence
-#'
-#' @param input
-#' @keywords
+#' @title get peptide sequence
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' getSequence_peptide()
-
+#' @examples getSequence_peptide()
 getSequence_peptide <- function(input, which.mart = mart, which.type = "external_gene_name", which.seq.type = "peptide", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = input, type = which.type, seqType = which.seq.type, mart = which.mart)
     return(df.temp)
@@ -70,15 +62,11 @@ getSequence_peptide <- function(input, which.mart = mart, which.type = "external
     }
 }
 
-#' get 3' UTR sequence
-#'
-#' @param input
-#' @keywords
+#' @title get 3' UTR sequence
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' getSequence_3UTR()
-
+#' @examples getSequence_3UTR()
 getSequence_3UTR <- function(ensg, which.mart = mart, which.type = "ensembl_gene_id", which.seq.type = "3utr", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = ensg, type = which.type, seqType = which.seq.type, mart = which.mart)
     return(df.temp)
@@ -98,15 +86,11 @@ getSequence_3UTR <- function(ensg, which.mart = mart, which.type = "ensembl_gene
     }
 }
 
-#' get 5' UTR sequence
-#'
-#' @param input
-#' @keywords
+#' @title get 5' UTR sequence
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' getSequence_5UTR()
-
+#' @examples getSequence_5UTR()
 getSequence_5UTR <- function(ensg, which.mart = mart, which.type = "ensembl_gene_id", which.seq.type = "5utr", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = ensg, type = which.type, seqType = which.seq.type, mart = which.mart)
     return(df.temp)
@@ -126,14 +110,11 @@ getSequence_5UTR <- function(ensg, which.mart = mart, which.type = "ensembl_gene
     }
 }
 
-#' get upstream sequence
-#'
-#' @param input
-#' @keywords
+#' @title get upstream sequence
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' getUpstream()
+#' @examples getUpstream()
 getUpstream <- function(input, bp_upstream = 2000, which.mart = mart, which.type = "external_gene_name", which.seq.type = "gene_flank", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = input, type = which.type, seqType = which.seq.type, upstream = bp_upstream, mart = which.mart)
     print(paste("Retrieved", nrow(df.temp), "sequence(s) from getSequence. Input had", length(input), "entries."))
@@ -169,15 +150,11 @@ getUpstream <- function(input, bp_upstream = 2000, which.mart = mart, which.type
     # # fix newline: awk '/^>/{print s? s"\n"$0:$0;s="";next}{s=s sprintf("%s",$0)}END{if(s)print s}'
 }
 
-#' Convert hugo names to ensembl gene identifiers
-#'
-#' @param input
-#' @keywords
+#' @title Convert hugo names to ensembl gene identifiers
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' hugo2ensg()
-
+#' @examples hugo2ensg()
 hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) hgnc <- row.names(hgnc)
 
@@ -213,15 +190,11 @@ hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ext_name2ensg()
-
+#' @examples ext_name2ensg()
 ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ext_name <- row.names(ext_name)
 
@@ -257,15 +230,11 @@ ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x 
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ext_name2chr_band()
-
+#' @examples ext_name2chr_band()
 ext_name2chr_band <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ext_name <- row.names(ext_name)
 
@@ -301,15 +270,11 @@ ext_name2chr_band <- function(ext_name, biomart = mart, combine = F, df2 = "", b
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ext_name2chr_band_df()
-
+#' @examples ext_name2chr_band_df()
 ext_name2chr_band_df <- function(df, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
     df.band <- getBM(
         filters= "external_gene_name",
@@ -351,15 +316,11 @@ ext_name2chr_band_df <- function(df, biomart = mart, combine = F, df2 = "", by.x
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' goid2goname()
-
+#' @examples goid2goname()
 goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) goid <- row.names(goid)
 
@@ -395,15 +356,11 @@ goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' goid2ensg_extName_biotype()
-
+#' @examples goid2ensg_extName_biotype()
 goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) goid <- row.names(goid)
 
@@ -439,15 +396,11 @@ goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' goid2ensg_extName_biotype_name_evidence()
-
+#' @examples goid2ensg_extName_biotype_name_evidence()
 goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) goid <- row.names(goid)
 
@@ -482,15 +435,11 @@ goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combin
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' enst2ensg()
-
+#' @examples enst2ensg()
 enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -526,15 +475,11 @@ enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2hugo()
-
+#' @examples ensg2hugo()
 ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -580,15 +525,11 @@ ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2source_status()
-
+#' @examples ensg2source_status()
 ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = T) {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -624,15 +565,11 @@ ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2reactome()
-
+#' @examples ensg2reactome()
 ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -668,15 +605,11 @@ ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2chr_start_end()
-
+#' @examples ensg2chr_start_end()
 ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F, as.IGV = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -719,15 +652,11 @@ ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2description()
-
+#' @examples ensg2description()
 ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -763,15 +692,11 @@ ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x =
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2uniprot()
-
+#' @examples ensg2uniprot()
 ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -807,15 +732,11 @@ ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "en
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' uniprot2ensg()
-
+#' @examples uniprot2ensg()
 uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, combine = F, df2 = "", by.x = "uniprot_swissprot", by.y = "uniprot_swissprot", all = F) {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) uniprot_swissprot <- row.names(uniprot_swissprot)
 
@@ -938,15 +859,11 @@ uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, co
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' agilent44k2ensg_chr()
-
+#' @examples agilent44k2ensg_chr()
 agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "", by.x = "efg_agilent_wholegenome_4x44k_v1", by.y = "efg_agilent_wholegenome_4x44k_v1", all = F) {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) probe_id <- row.names(probe_id)
 
@@ -982,15 +899,11 @@ agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "",
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2GO()
-
+#' @examples ensg2GO()
 ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -1034,15 +947,11 @@ ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' hugo2GO()
-
+#' @examples hugo2GO()
 hugo2GO <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ext_name <- row.names(ext_name)
 
@@ -1078,15 +987,11 @@ hugo2GO <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "ext
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2entrez_fc()
-
+#' @examples ensg2entrez_fc()
 ensg2entrez_fc <- function(df, ensg_col = row.names(df), fc_col = "log2FC", biomart = mart,
                            combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
     fc_col <- match(fc_col, colnames(MEG3))
@@ -1106,15 +1011,11 @@ ensg2entrez_fc <- function(df, ensg_col = row.names(df), fc_col = "log2FC", biom
     return(y)
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' exon2ensg.is_constitutive()
-
+#' @examples exon2ensg.is_constitutive()
 exon2ensg.is_constitutive <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
 
@@ -1150,15 +1051,11 @@ exon2ensg.is_constitutive <- function(ense_id, biomart = mart, combine = F, df2 
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' exon2gencode.basic()
-
+#' @examples exon2gencode.basic()
 exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
 
@@ -1196,15 +1093,11 @@ exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", b
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' exon2appris()
-
+#' @examples exon2appris()
 exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
    if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
 
@@ -1240,15 +1133,11 @@ exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' exon2ensg()
-
+#' @examples exon2ensg()
 exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ense_id <- row.names(ense_id)
     df <- getBM(
@@ -1284,15 +1173,11 @@ exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "en
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2gene_biotype()
-
+#' @examples ensg2gene_biotype()
 ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
     df <- getBM(
@@ -1328,15 +1213,11 @@ ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x 
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2ext_name()
-
+#' @examples ensg2ext_name()
 ensg2ext_name <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -1373,15 +1254,11 @@ ensg2ext_name <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2ext_name_biotype()
-
+#' @examples ensg2ext_name_biotype()
 ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "row.names", all = F, title = "", ...) {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -1415,15 +1292,11 @@ ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' enst2ext_name_biotype()
-
+#' @examples enst2ext_name_biotype()
 enst2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ensg <- row.names(ensg)
 
@@ -1459,15 +1332,11 @@ enst2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' reactome.ensg()
-
+#' @examples reactome.ensg()
 reactome.ensg <- function(ensg.diff.exp, biomart = mart, pvalueCutoff=0.05, readable = T) {
 try(entrez.ids <- ensg2entrez(ensg.diff.exp, biomart))
     try(print(paste("Returned ", nrow(entrez.ids), " entrez.ids from ", length(ensg.diff.exp), " ensembl_gene_ids", sep = "")))
@@ -1479,16 +1348,12 @@ try(entrez.ids <- ensg2entrez(ensg.diff.exp, biomart))
     return(t)
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
 #' @import limma
-#' @examples
-#' goana.ensg()
-
+#' @examples goana.ensg()
 goana.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart, pval = "", ont = "",
                                combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F
                                ) {
@@ -1550,16 +1415,12 @@ goana.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart, pval = 
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
 #' @import limma
-#' @examples
-#' kegga.ensg()
-
+#' @examples kegga.ensg()
 kegga.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
     entrez.ids <- ensg2entrez(ensg.diff.exp, biomart)
     if (ensg.universe == F) {
@@ -1570,16 +1431,12 @@ kegga.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
     return(kegga(entrez.ids$entrezgene, ensg.universe$entrezgene))
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
 #' @import ReactomePA
-#' @examples
-#' reactome.ext_name()
-
+#' @examples reactome.ext_name()
 reactome.ext_name <- function(ext_name.diff.exp, return.annotated.counts = F, ranks = 0, biomart = mart, pvalueCutoff=0.05, readable = T,
                               df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F, org = "human", universe = "") {
     try(entrez.ids <- ext_name2entrez(ext_name.diff.exp))
@@ -1626,16 +1483,12 @@ reactome.ext_name <- function(ext_name.diff.exp, return.annotated.counts = F, ra
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
 #' @import limma
-#' @examples
-#' goana.ext_name()
-
+#' @examples goana.ext_name()
 goana.ext_name<- function(ext_name.diff.exp, ensg.universe = F, biomart = mart) {
     entrez.ids <- ext_name2entrez(ext_name.diff.exp, biomart)
     if (ensg.universe == F) {
@@ -1646,16 +1499,12 @@ goana.ext_name<- function(ext_name.diff.exp, ensg.universe = F, biomart = mart) 
     return(goana(entrez.ids$entrezgene, ensg.universe$entrezgene, species = "Hs"))
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
 #' @import limma
-#' @examples
-#' kegga.ext_name()
-
+#' @examples kegga.ext_name()
 kegga.ext_name <- function(ext_name.diff.exp, ensg.universe = F, biomart = mart) {
     entrez.ids <- ext_name2entrez(ext_name.diff.exp, biomart)
     if (ensg.universe == F) {
@@ -1666,15 +1515,11 @@ kegga.ext_name <- function(ext_name.diff.exp, ensg.universe = F, biomart = mart)
     return(kegga(entrez.ids$entrezgene, ensg.universe$entrezgene))
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' entrez2ext_name()
-
+#' @examples entrez2ext_name()
 entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F)
 {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) entrez_ids <- row.names(entrez_ids)
@@ -1711,15 +1556,11 @@ entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", b
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' entrez2ensg()
-
+#' @examples entrez2ensg()
 entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F)
 {
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) entrez_ids <- row.names(entrez_ids)
@@ -1756,15 +1597,11 @@ entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x 
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' hugo2entrez()
-
+#' @examples hugo2entrez()
 hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) hgnc <- row.names(hgnc)
     df <- getBM(
@@ -1799,15 +1636,11 @@ hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgn
     }
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ensg2entrez()
-
+#' @examples ensg2entrez()
 ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) ENSG_v82 <- row.names(ENSG_v82)
 
@@ -1844,15 +1677,11 @@ ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = 
 
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
-#' @examples
-#' ext_name2entrez()
-
+#' @examples ext_name2entrez()
 ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
     if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F) external_gene_name <- row.names(external_gene_name)
 
@@ -1889,10 +1718,8 @@ ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2
 
 }
 
-#' Biomart conversion
-#'
-#' @param input
-#' @keywords
+#' @title Biomart conversion
+#' @param input input
 #' @export
 #' @import biomaRt
 entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F){

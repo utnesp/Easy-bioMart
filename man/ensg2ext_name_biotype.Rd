@@ -8,8 +8,8 @@ ensg2ext_name_biotype(ensg, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_gene_id", by.y = "row.names", all = F, title = "",
   ...)
 }
-\description{
-Biomart conversion
+\arguments{
+\item{input}{input}
 }
 \examples{
 ensg2ext_name_biotype()

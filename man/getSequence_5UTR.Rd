@@ -7,8 +7,8 @@
 getSequence_5UTR(ensg, which.mart = mart, which.type = "ensembl_gene_id",
   which.seq.type = "5utr", fasta.output = "")
 }
-\description{
-get 5' UTR sequence
+\arguments{
+\item{input}{input}
 }
 \examples{
 getSequence_5UTR()
