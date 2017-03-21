@@ -9,7 +9,7 @@ agilent44k2ensg_chr(probe_id, biomart = mart, combine = F, df2 = "",
   by.y = "efg_agilent_wholegenome_4x44k_v1", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{probe_id}{input}
 }
 \examples{
 agilent44k2ensg_chr()

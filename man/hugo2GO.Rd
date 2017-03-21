@@ -8,7 +8,7 @@ hugo2GO(ext_name, biomart = mart, combine = F, df2 = "",
   by.x = "external_gene_name", by.y = "external_gene_name", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{ext_name}{input}
 }
 \examples{
 hugo2GO()

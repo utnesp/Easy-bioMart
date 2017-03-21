@@ -8,7 +8,7 @@ ensg2source_status(ensg, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = T)
 }
 \arguments{
-\item{input}{input}
+\item{ensg}{input}
 }
 \examples{
 ensg2source_status()

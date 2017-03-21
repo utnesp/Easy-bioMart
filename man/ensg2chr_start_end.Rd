@@ -9,7 +9,7 @@ ensg2chr_start_end(ensg, biomart = mart, combine = F, df2 = "",
   as.IGV = F)
 }
 \arguments{
-\item{input}{input}
+\item{ensg}{input}
 }
 \examples{
 ensg2chr_start_end()

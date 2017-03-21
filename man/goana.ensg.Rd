@@ -9,7 +9,7 @@
   by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{ensg.diff.exp}{input}
 }
 \examples{
 goana.ensg()

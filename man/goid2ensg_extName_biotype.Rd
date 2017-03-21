@@ -8,7 +8,7 @@ goid2ensg_extName_biotype(goid, biomart = mart, combine = F, df2 = "",
   by.x = "go_id", by.y = "go_id", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{goid}{input}
 }
 \examples{
 goid2ensg_extName_biotype()

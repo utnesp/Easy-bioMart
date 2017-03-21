@@ -7,7 +7,7 @@
 \method{kegga}{ensg}(ensg.diff.exp, ensg.universe = F, biomart = mart)
 }
 \arguments{
-\item{input}{input}
+\item{ensg.diff.exp}{input}
 }
 \examples{
 kegga.ensg()

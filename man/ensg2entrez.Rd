@@ -8,7 +8,7 @@ ensg2entrez(ENSG_v82, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{ENSG_v82}{input}
 }
 \examples{
 ensg2entrez()

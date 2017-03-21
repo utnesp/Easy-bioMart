@@ -8,7 +8,7 @@ reactome.ensg(ensg.diff.exp, biomart = mart, pvalueCutoff = 0.05,
   readable = T)
 }
 \arguments{
-\item{input}{input}
+\item{ensg.diff.exp}{input}
 }
 \examples{
 reactome.ensg()

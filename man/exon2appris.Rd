@@ -8,7 +8,7 @@ exon2appris(ense_id, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{ense_id}{input}
 }
 \examples{
 exon2appris()

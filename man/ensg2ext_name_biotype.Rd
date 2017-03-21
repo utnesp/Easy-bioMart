@@ -9,7 +9,7 @@ ensg2ext_name_biotype(ensg, biomart = mart, combine = F, df2 = "",
   ...)
 }
 \arguments{
-\item{input}{input}
+\item{ensg}{input}
 }
 \examples{
 ensg2ext_name_biotype()

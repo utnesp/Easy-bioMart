@@ -9,7 +9,7 @@ ensg2entrez_fc(df, ensg_col = row.names(df), fc_col = "log2FC",
   by.y = "ensembl_gene_id", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{df}{input}
 }
 \examples{
 ensg2entrez_fc()

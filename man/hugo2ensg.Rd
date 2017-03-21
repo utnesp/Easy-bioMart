@@ -8,7 +8,7 @@ hugo2ensg(hgnc, biomart = mart, combine = F, df2 = "",
   by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{hgnc}{input}
 }
 \examples{
 hugo2ensg()

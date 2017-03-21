@@ -8,7 +8,7 @@ enst2ext_name_biotype(ensg, biomart = mart, combine = F, df2 = "",
   by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{ensg}{input}
 }
 \examples{
 enst2ext_name_biotype()

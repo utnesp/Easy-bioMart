@@ -8,7 +8,7 @@ ext_name2chr_band_df(df, biomart = mart, combine = F, df2 = "",
   by.x = "external_gene_name", by.y = "external_gene_name", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{df}{input}
 }
 \examples{
 ext_name2chr_band_df()

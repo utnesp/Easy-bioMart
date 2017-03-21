@@ -8,7 +8,7 @@
   biomart = mart)
 }
 \arguments{
-\item{input}{input}
+\item{ext_name.diff.exp}{input}
 }
 \examples{
 goana.ext_name()

@@ -10,7 +10,7 @@ reactome.ext_name(ext_name.diff.exp, return.annotated.counts = F, ranks = 0,
   org = "human", universe = "")
 }
 \arguments{
-\item{input}{input}
+\item{ext_name.diff.exp}{input}
 }
 \examples{
 reactome.ext_name()

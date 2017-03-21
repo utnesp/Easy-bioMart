@@ -9,7 +9,7 @@ uniprot2ensg(uniprot_swissprot, useSwissprot = T, biomart = mart,
   by.y = "uniprot_swissprot", all = F)
 }
 \arguments{
-\item{input}{input}
+\item{uniprot_swissprot}{input}
 }
 \examples{
 uniprot2ensg()
