@@ -84,6 +84,6 @@ If you have a data.frame, you can figure out what the genes are like this:
 6 ENSG00000099251          HSD17B7P2 transcribed_unprocessed_pseudogene          4
 ```
 
-Currently, it is not possible to use e.g. ENSG identifiers in row.names when using combine = T.
+Currently, it is not possible to use e.g. ENSG identifiers in row.names when using combine = T. 
 
-The functions should be self-explanatory. If you have any problems, please do not hesitate to ask.
+The functions should be self-explanatory, and as such I have not put together all the correct details regarding the help functions. If you have any problems, please post an [issue](https://github.com/utnesp/Easy-bioMart/issues).
