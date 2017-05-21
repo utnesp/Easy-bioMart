@@ -3,6 +3,7 @@
 #' @export
 #' @import biomaRt
 #' @examples getSequence_cDNA()
+
 getSequence_cDNA <- function(input, which.mart = mart, which.type = "external_gene_name", which.seq.type = "cdna", fasta.output = "") {
     df.temp <- biomaRt::getSequence(id = input, type = which.type, seqType = which.seq.type, mart = which.mart)
     return(df.temp)
@@ -140,7 +141,7 @@ getUpstream <- function(input, bp_upstream = 2000, which.mart = mart, which.type
 #' @import biomaRt
 #' @examples hugo2ensg()
 hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F){
-    if(is.object(hgnc)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) hgnc <- row.names(hgnc)
+    # if(is.object(hgnc)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) hgnc <- row.names(hgnc)
     
     df <- res <- getBM(
         filters= "hgnc_symbol",
@@ -180,7 +181,7 @@ hugo2ensg <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_
 #' @import biomaRt
 #' @examples ext_name2ensg()
 ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
-    if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ext_name <- row.names(ext_name)
+    # if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ext_name <- row.names(ext_name)
 
     df <- getBM(
         filters= "external_gene_name",
@@ -218,9 +219,49 @@ ext_name2ensg <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x 
 #' @param ext_name input
 #' @export
 #' @import biomaRt
+#' @examples ext_name2enst()
+ext_name2enst <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
+    # if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ext_name <- row.names(ext_name)
+
+    df <- getBM(
+        filters= "external_gene_name",
+        attributes= c("external_gene_name", "ensembl_transcript_id"),
+        values= ext_name,
+        mart = biomart)
+
+    if (combine == T) {
+        if (df2 == "") {
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+
+            } else {
+
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+}
+
+#' @title Biomart conversion
+#' @param ext_name input
+#' @export
+#' @import biomaRt
 #' @examples ext_name2chr_band()
 ext_name2chr_band <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
-    if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ext_name <- row.names(ext_name)
+    # if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ext_name <- row.names(ext_name)
 
     df <- getBM(
         filters= "external_gene_name",
@@ -253,6 +294,48 @@ ext_name2chr_band <- function(ext_name, biomart = mart, combine = F, df2 = "", b
         return(df)
     }
 }
+
+#' @title Biomart conversion
+#' @param ext_name input
+#' @export
+#' @import biomaRt
+#' @examples ext_name2chr_band()
+ext_name2chr_TSS_codingEnd_strand <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
+
+    df <- getBM(
+        filters= "external_gene_name",
+        attributes= c("external_gene_name", "chromosome_name", "transcription_start_site", "genomic_coding_end","strand"),
+        values= ext_name,
+        mart = biomart)
+
+
+    
+    if (combine == T) {
+        if (df2 == "") {
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+
+            } else {
+
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+}
+
 
 #' @title Biomart conversion
 #' @param df input
@@ -306,7 +389,7 @@ ext_name2chr_band_df <- function(df, biomart = mart, combine = F, df2 = "", by.x
 #' @import biomaRt
 #' @examples goid2goname()
 goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
-    if(is.object(goid)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) goid <- row.names(goid)
+    # if(is.object(goid)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) goid <- row.names(goid)
 
     df <- getBM(
         filters= "go_id",
@@ -346,7 +429,7 @@ goid2goname <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_
 #' @import biomaRt
 #' @examples goid2ensg_extName_biotype()
 goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
-    if(is.object(goid)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) goid <- row.names(goid)
+    # if(is.object(goid)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) goid <- row.names(goid)
 
     df <- getBM(
         filters= "go_id",
@@ -386,7 +469,7 @@ goid2ensg_extName_biotype <- function(goid, biomart = mart, combine = F, df2 = "
 #' @import biomaRt
 #' @examples goid2ensg_extName_biotype_name_evidence()
 goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combine = F, df2 = "", by.x = "go_id", by.y = "go_id", all = F){
-    if(is.object(goid)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) goid <- row.names(goid)
+    # if(is.object(goid)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) goid <- row.names(goid)
 
     df <- getBM(filters= "go_id",
                 attributes= c("go_id", "ensembl_gene_id", "external_gene_name", "gene_biotype", "go_linkage_type"),
@@ -425,7 +508,7 @@ goid2ensg_extName_biotype_name_evidence <- function(goid, biomart = mart, combin
 #' @import biomaRt
 #' @examples enst2ensg()
 enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_transcript_id",
@@ -459,13 +542,111 @@ enst2ensg <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
     }
 }
 
+
+#' @title Biomart conversion
+#' @param enst input
+#' @export
+#' @import biomaRt
+#' @examples enst2ensg()
+enst2ensg.extName <- function(enst = NULL, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
+    # if(is.object(enst)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
+
+    if (is.null(enst)) {
+          df <- getBM(
+            attributes= c("ensembl_transcript_id", "ensembl_gene_id", "external_gene_name"),
+            mart = biomart)
+    } else {
+        df <- getBM(
+            filters= "ensembl_transcript_id",
+            attributes= c("ensembl_transcript_id", "ensembl_gene_id", "external_gene_name"),
+            values= enst,
+            mart = biomart)
+    }
+    
+    if (combine == T) {
+        if (df2 == "") {
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+
+            } else {
+
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+}
+
+#' @title Biomart conversion
+#' @param enst input
+#' @export
+#' @import biomaRt
+#' @examples enst2ensg()
+enst2ensg.extName.with.version <- function(enst = NULL, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
+    # if(is.object(enst)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
+
+    if (is.null(enst)) {
+          df <- getBM(
+            attributes= c("ensembl_transcript_id", "ensembl_gene_id", "external_gene_name", "version", "transcript_version"),
+            mart = biomart)
+    } else {
+        df <- getBM(
+            filters= "ensembl_transcript_id",
+            attributes= c("ensembl_transcript_id", "ensembl_gene_id", "external_gene_name", "version", "transcript_version"),
+            values= enst,
+            mart = biomart)
+    }
+    
+    df$ensembl_transcript_id <- paste(df$ensembl_transcript_id, df$transcript_version, sep = ".")
+    df$ensembl_gene_id <- paste(df$ensembl_gene_id, df$version, sep = ".")
+    df$version <- NULL; df$transcript_version <- NULL
+
+    
+    if (combine == T) {
+        if (df2 == "") {
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+
+            } else {
+
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+}
+
 #' @title Biomart conversion
 #' @param ensg input
 #' @export
 #' @import biomaRt
 #' @examples ensg2hugo()
 ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -515,7 +696,7 @@ ensg2hugo <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensem
 #' @import biomaRt
 #' @examples ensg2source_status()
 ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = T) {
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -555,7 +736,7 @@ ensg2source_status <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
 #' @import biomaRt
 #' @examples ensg2reactome()
 ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -595,7 +776,7 @@ ensg2reactome <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
 #' @import biomaRt
 #' @examples ensg2chr_start_end()
 ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F, as.IGV = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -642,7 +823,7 @@ ensg2chr_start_end <- function(ensg, biomart = mart, combine = F, df2 = "", by.x
 #' @import biomaRt
 #' @examples ensg2description()
 ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -682,7 +863,7 @@ ensg2description <- function(ensg, biomart = mart, combine = F, df2 = "", by.x =
 #' @import biomaRt
 #' @examples ensg2uniprot()
 ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F) {
-   if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+   # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
    df <- getBM(
         filters= "ensembl_gene_id",
@@ -722,7 +903,7 @@ ensg2uniprot <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "en
 #' @import biomaRt
 #' @examples uniprot2ensg()
 uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, combine = F, df2 = "", by.x = "uniprot_swissprot", by.y = "uniprot_swissprot", all = F) {
-    if(is.object(uniprot_swissprot)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) uniprot_swissprot <- row.names(uniprot_swissprot)
+    # if(is.object(uniprot_swissprot)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) uniprot_swissprot <- row.names(uniprot_swissprot)
 
     if (useSwissprot == T) {
         print("Using Swiss-Prot, a manually annotated and reviewed database")
@@ -849,7 +1030,7 @@ uniprot2ensg <- function(uniprot_swissprot, useSwissprot = T, biomart = mart, co
 #' @import biomaRt
 #' @examples agilent44k2ensg_chr()
 agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "", by.x = "efg_agilent_wholegenome_4x44k_v1", by.y = "efg_agilent_wholegenome_4x44k_v1", all = F) {
-    if(is.object(probe_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) probe_id <- row.names(probe_id)
+    # if(is.object(probe_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) probe_id <- row.names(probe_id)
 
     df <- getBM(
         filters= "efg_agilent_wholegenome_4x44k_v1",
@@ -889,7 +1070,7 @@ agilent44k2ensg_chr <- function(probe_id, biomart = mart, combine = F, df2 = "",
 #' @import biomaRt
 #' @examples ensg2GO()
 ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -937,7 +1118,7 @@ ensg2GO <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl
 #' @import biomaRt
 #' @examples hugo2GO()
 hugo2GO <- function(ext_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
-    if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ext_name <- row.names(ext_name)
+    # if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ext_name <- row.names(ext_name)
 
     df <- getBM(
         filters= "external_gene_name",
@@ -995,6 +1176,9 @@ ensg2entrez_fc <- function(df, ensg_col = row.names(df), fc_col = "log2FC", biom
     return(y)
 }
 
+
+
+
 #' @title Biomart conversion
 #' @param ense_id input
 #' @export
@@ -1041,7 +1225,7 @@ exon2ensg.is_constitutive <- function(ense_id, biomart = mart, combine = F, df2 
 #' @import biomaRt
 #' @examples exon2gencode.basic()
 exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
-    if(is.object(ense_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ense_id <- row.names(ense_id)
+    # if(is.object(ense_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ense_id <- row.names(ense_id)
 
     df <- getBM(
         filters= "ensembl_exon_id",
@@ -1083,7 +1267,7 @@ exon2gencode.basic <- function(ense_id, biomart = mart, combine = F, df2 = "", b
 #' @import biomaRt
 #' @examples exon2appris()
 exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
-   if(is.object(ense_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ense_id <- row.names(ense_id)
+   # if(is.object(ense_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ense_id <- row.names(ense_id)
 
    df <- getBM(
         filters= "ensembl_exon_id",
@@ -1123,7 +1307,7 @@ exon2appris <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "
 #' @import biomaRt
 #' @examples exon2ensg()
 exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F){
-    if(is.object(ense_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ense_id <- row.names(ense_id)
+    # if(is.object(ense_id)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ense_id <- row.names(ense_id)
     df <- getBM(
         filters= "ensembl_exon_id",
         attributes= c("ensembl_exon_id", "ensembl_gene_id"),
@@ -1163,7 +1347,7 @@ exon2ensg <- function(ense_id, biomart = mart, combine = F, df2 = "", by.x = "en
 #' @import biomaRt
 #' @examples ensg2gene_biotype()
 ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "gene_biotype"),
@@ -1203,7 +1387,7 @@ ensg2gene_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x 
 #' @import biomaRt
 #' @examples ensg2ext_name()
 ensg2ext_name <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -1244,7 +1428,7 @@ ensg2ext_name <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "e
 #' @import biomaRt
 #' @examples ensg2ext_name_biotype()
 ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "row.names", all = F, title = "", ...) {
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_gene_id",
@@ -1282,7 +1466,7 @@ ensg2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
 #' @import biomaRt
 #' @examples enst2ext_name_biotype()
 enst2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
-    if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
 
     df <- getBM(
         filters= "ensembl_transcript_id",
@@ -1316,9 +1500,53 @@ enst2ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", b
     }
 }
 
+
+#' @title Biomart conversion
+#' @param ensg input
+#' @export
+#' @import biomaRt
+#' @examples enst2ext_name_biotype()
+enst2ensg2_ext_name_biotype <- function(ensg, biomart = mart, combine = F, df2 = "", by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F){
+    # # if(is.object(ensg)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ensg <- row.names(ensg)
+
+    df <- getBM(
+        filters= "ensembl_transcript_id",
+        attributes= c("ensembl_transcript_id", "ensembl_gene_id", "transcript_biotype", "external_transcript_name", "external_gene_name", "gene_biotype"),
+        values= ensg,
+        mart = biomart)
+
+    if (combine == T) {
+        if (df2 == "") {
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+
+            } else {
+
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+}
+    
+    
+    
 #' @title Biomart conversion
 #' @param ensg.diff.exp input
 #' @export
+#' @import ReactomePA
 #' @import biomaRt
 #' @examples reactome.ensg()
 reactome.ensg <- function(ensg.diff.exp, biomart = mart, pvalueCutoff=0.05, readable = T) {
@@ -1404,6 +1632,73 @@ goana.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart, pval = 
 #' @export
 #' @import biomaRt
 #' @import limma
+#' @examples goana.ensg()
+goana.enst <- function(ensg.diff.exp, ensg.universe = F, biomart = mart, pval = "", ont = "",
+                               combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F
+                               ) {
+
+    entrez.ids <- enst2entrez(ensg.diff.exp, biomart)
+
+    if (ensg.universe == F) {
+        ensg.universe <- universe
+    } else {
+        ensg.universe <- enst2entrez(ensg.diff.exp, biomart)
+    }
+
+    df <- goana(entrez.ids$entrezgene, ensg.universe$entrezgene, species = "Hs")
+
+    df <- df[order(df$P.DE), ]
+
+    if (pval != "") {
+        df <- df[df$P.DE < pval, ]
+    }
+
+    if (ont != "") {
+        df <- df[df$Ont %in% ont, ]
+    }
+
+
+    if (combine == T) {
+
+        k <- ifelse(10 > nrow(df), nrow(df), 10)
+
+        for (i in 1:k) {
+
+            if (i == 1) {
+                df.anno <- goid2ensg_extName_biotype(row.names(df)[i])
+            } else {
+                m <- goid2ensg_extName_biotype(row.names(df)[i])
+                df.anno <- rbind(df.anno, m)
+            }
+        }
+
+        df.anno <- merge(df.anno, df, by.x = "go_id", by.y = "row.names")
+
+        if (df2 == "") {
+            # insted of this, we automate this expr to the line below df2 <- get(gsub("\\$.*","", deparse(substitute(formalArgs(exon2ensg.is_constitutive)[1]))))
+            # df2 is the first argument passed to this function:
+            df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+            # by.y is the column selected in the first argument sent to this function
+            by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+            df.anno <- merge(df.anno, df2, by = "ensembl_gene_id")
+            df.anno <- df.anno[order(df.anno$P.DE), ]
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            df.anno <- df.anno[order(df.anno$P.DE), ]
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+}
+
+#' @title Biomart conversion
+#' @param ensg.diff.exp input
+#' @export
+#' @import biomaRt
+#' @import limma
 #' @examples kegga.ensg()
 kegga.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
     entrez.ids <- ensg2entrez(ensg.diff.exp, biomart)
@@ -1414,6 +1709,92 @@ kegga.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
     }
     return(kegga(entrez.ids$entrezgene, ensg.universe$entrezgene))
 }
+
+#' @title Biomart conversion
+#' @param ext_name.diff.exp input
+#' @export
+#' @import biomaRt
+#' @import ReactomePA
+#' @examples reactome.ext_name()
+reactome.ext_name <- function(ext_name.diff.exp, return.annotated.counts = F, ranks = 0, biomart = mart, pvalueCutoff=0.05, readable = T,
+                              df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F, org = "human", universe = "") {
+    try(entrez.ids <- ext_name2entrez(ext_name.diff.exp))
+    try(print(paste("Returned ", nrow(entrez.ids), " entrez.ids from ", length(ext_name.diff.exp), " external_gene_names", sep = "")))
+    try(entrez.ids <- entrez.ids[!is.na(entrez.ids$entrezgene), ])
+    
+    if (universe == "") {
+        universe <- as.character(universe.entrez$entrezgene[!is.na(universe.entrez$entrezgene)])
+    }
+    print(universe)
+    try(t <- enrichPathway(gene=entrez.ids$entrezgene, pvalueCutoff=pvalueCutoff, readable=readable, organism = org, universe = universe))
+    try(x <- summary(t))
+    try(x$Description <- gsub(" ", "_", x$Description))
+
+    if (ranks != 0) {
+        try(x <- x[1:ranks,])
+    } else {
+        try(print(x))
+    }
+
+    if (return.annotated.counts == T) {
+        for (i in 1:nrow(x)) {
+            genes <- unlist(strsplit(x[i, "geneID"], "/"))
+
+            if (i == 1) {
+                df <- data.frame(external_gene_name = genes, reactome = rep(x$Description[i], length(genes)), reactome.qval = rep(x$qvalue[i], length(genes)), rank = rep(i, length(genes)))
+            } else {
+                df <- rbind(df, data.frame(external_gene_name = genes, reactome = rep(x$Description[i], length(genes)), reactome.qval = rep(x$qvalue[i], length(genes)), rank = rep(i, length(genes))))
+            }
+        }
+
+        if (df2 == "") {
+            df2 <- get(gsub("$external_gene_name", "", deparse(substitute(ext_name.diff.exp)), fixed = T))
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            df.anno <- df.anno[order(df.anno$rank), ]
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            df.anno <- df.anno[order(df.anno$rank), ]
+            return(df.anno)
+        }
+
+    } else {
+        return(x)
+    }
+}
+
+#' @title Biomart conversion
+#' @param ensg.diff.exp input
+#' @export
+#' @import biomaRt
+#' @import limma
+#' @examples kegga.ensg()
+kegga.ensg <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
+    entrez.ids <- ensg2entrez(ensg.diff.exp, biomart)
+    if (ensg.universe == F) {
+        ensg.universe <- universe
+    } else {
+        ensg.universe <- ensg2entrez(ensg.diff.exp, biomart)
+    }
+    return(kegga(entrez.ids$entrezgene, ensg.universe$entrezgene))
+}
+
+#' @title Biomart conversion
+#' @param ensg.diff.exp input
+#' @export
+#' @import biomaRt
+#' @import limma
+#' @examples kegga.ensg()
+kegga.enst <- function(ensg.diff.exp, ensg.universe = F, biomart = mart) {
+    entrez.ids <- enst2entrez(ensg.diff.exp, biomart)
+    if (ensg.universe == F) {
+        ensg.universe <- universe
+    } else {
+        ensg.universe <- enst2entrez(ensg.diff.exp, biomart)
+    }
+    return(kegga(entrez.ids$entrezgene, ensg.universe$entrezgene))
+}
+
 
 #' @title Biomart conversion
 #' @param ext_name.diff.exp input
@@ -1467,6 +1848,8 @@ reactome.ext_name <- function(ext_name.diff.exp, return.annotated.counts = F, ra
     }
 }
 
+
+
 #' @title Biomart conversion
 #' @param ext_name.diff.exp input
 #' @export
@@ -1506,7 +1889,7 @@ kegga.ext_name <- function(ext_name.diff.exp, ensg.universe = F, biomart = mart)
 #' @examples entrez2ext_name()
 entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F)
 {
-    if(is.object(entrez_ids)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) entrez_ids <- row.names(entrez_ids)
+    # if(is.object(entrez_ids)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) entrez_ids <- row.names(entrez_ids)
     df <- getBM(
         filters= "entrezgene",
         attributes= c("entrezgene", "external_gene_name"),
@@ -1547,7 +1930,7 @@ entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", b
 #' @examples entrez2ensg()
 entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F)
 {
-    if(is.object(entrez_ids)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) entrez_ids <- row.names(entrez_ids)
+    # if(is.object(entrez_ids)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) entrez_ids <- row.names(entrez_ids)
     df <- getBM(
         filters= "entrezgene",
         attributes= c("entrezgene", "ensembl_gene_id"),
@@ -1587,7 +1970,7 @@ entrez2ensg <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x 
 #' @import biomaRt
 #' @examples hugo2entrez()
 hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F){
-    if(is.object(hgnc)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) hgnc <- row.names(hgnc)
+    # if(is.object(hgnc)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) hgnc <- row.names(hgnc)
     df <- getBM(
         filters= "hgnc_symbol",
         attributes= c("hgnc_symbol", "entrezgene"),
@@ -1626,11 +2009,52 @@ hugo2entrez <- function(hgnc, biomart = mart, combine = F, df2 = "", by.x = "hgn
 #' @import biomaRt
 #' @examples ensg2entrez()
 ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
-    if(is.object(ENSG_v82)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ENSG_v82 <- row.names(ENSG_v82)
+   #  # if(is.object(ENSG_v82)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ENSG_v82 <- row.names(ENSG_v82)
 
     df <- getBM(
         filters= "ensembl_gene_id",
         attributes= c("ensembl_gene_id", "entrezgene"),
+        values= ENSG_v82,
+        mart = biomart)
+
+    if (combine == T) {
+        if (df2 == "") {
+            if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == T) {
+                df2 <- get(gsub("\\$.*","", strsplit(as.character(match.call()), "=")[[2]]  ))
+                # by.y is the column selected in the first argument sent to this function
+                by.y = gsub(".*\\$","", strsplit(as.character(match.call()), "=")[[2]])
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+
+            } else {
+
+                df2 <- get(strsplit(as.character(match.call()), "=")[[2]]  )
+                by.y = "row.names"
+
+                df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            }
+            return(df.anno)
+        } else {
+            df.anno <- merge(df, df2, by.x = by.x, by.y = by.y, all = all)
+            return(df.anno)
+        }
+    } else {
+        return(df)
+    }
+
+}
+
+#' @title Biomart conversion
+#' @param ENSG_v82 input
+#' @export
+#' @import biomaRt
+#' @examples ensg2entrez()
+enst2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F){
+    # if(is.object(ENSG_v82)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) ENSG_v82 <- row.names(ENSG_v82)
+
+    df <- getBM(
+        filters= "ensembl_transcript_id",
+        attributes= c("ensembl_transcript_id", "entrezgene"),
         values= ENSG_v82,
         mart = biomart)
 
@@ -1667,7 +2091,7 @@ ensg2entrez <- function(ENSG_v82, biomart = mart, combine = F, df2 = "", by.x = 
 #' @import biomaRt
 #' @examples ext_name2entrez()
 ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2 = "", by.x = "external_gene_name", by.y = "external_gene_name", all = F){
-    if(is.object(external_gene_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) external_gene_name <- row.names(external_gene_name)
+    # if(is.object(external_gene_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) external_gene_name <- row.names(external_gene_name)
 
     df <- getBM(
         filters= "external_gene_name",
@@ -1707,7 +2131,7 @@ ext_name2entrez <- function(external_gene_name, biomart = mart, combine = F, df2
 #' @export
 #' @import biomaRt
 entrez2ext_name <- function(entrez_ids, biomart = mart, combine = F, df2 = "", by.x = "entrezgene", by.y = "entrezgene", all = F){
-    if(is.object(entrez_ids)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) entrez_ids <- row.names(entrez_ids)
+    # if(is.object(entrez_ids)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F & class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame" ) entrez_ids <- row.names(entrez_ids)
 
     df <- getBM(
         filters= "entrezgene",

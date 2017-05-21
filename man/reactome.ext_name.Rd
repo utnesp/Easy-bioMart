@@ -2,8 +2,14 @@
 % Please edit documentation in R/easybiomart.R
 \name{reactome.ext_name}
 \alias{reactome.ext_name}
+\alias{reactome.ext_name}
 \title{Biomart conversion}
 \usage{
+reactome.ext_name(ext_name.diff.exp, return.annotated.counts = F, ranks = 0,
+  biomart = mart, pvalueCutoff = 0.05, readable = T, df2 = "",
+  by.x = "external_gene_name", by.y = "external_gene_name", all = F,
+  org = "human", universe = "")
+
 reactome.ext_name(ext_name.diff.exp, return.annotated.counts = F, ranks = 0,
   biomart = mart, pvalueCutoff = 0.05, readable = T, df2 = "",
   by.x = "external_gene_name", by.y = "external_gene_name", all = F,
@@ -11,7 +17,10 @@ reactome.ext_name(ext_name.diff.exp, return.annotated.counts = F, ranks = 0,
 }
 \arguments{
 \item{ext_name.diff.exp}{input}
+
+\item{ext_name.diff.exp}{input}
 }
 \examples{
+reactome.ext_name()
 reactome.ext_name()
 }
