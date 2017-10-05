@@ -5,7 +5,8 @@
 \title{Biomart conversion}
 \usage{
 ensg2description(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
+  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F,
+  remove.bracket.info = T)
 }
 \arguments{
 \item{ensg}{input}

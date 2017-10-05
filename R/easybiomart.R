@@ -2441,7 +2441,11 @@ refseq2ensg_ext_name <- function(refseq_ids, biomart = mart, combine = F, df2 = 
     }
 
 }
-    
+
+#' @title Biomart conversion
+#' @param array_ids input
+#' @export
+#' @import biomaRt
 array2ensg <- function(array_ids, array = NULL, biomart = mart, combine = F, df2 = "", by.x = array, by.y = array, all = F){
     # if(is.object(ext_name)) if(grepl("$", strsplit(as.character(match.call()), "=")[[2]], fixed = T) == F &  class(get(strsplit(as.character(match.call()), "=")[[2]])) == "data.frame"  ) ext_name <- row.names(ext_name)
     

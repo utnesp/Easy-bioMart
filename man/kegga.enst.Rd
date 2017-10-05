@@ -4,7 +4,7 @@
 \alias{kegga.enst}
 \title{Biomart conversion}
 \usage{
-kegga.enst(ensg.diff.exp, ensg.universe = F, biomart = mart)
+\method{kegga}{enst}(ensg.diff.exp, ensg.universe = F, biomart = mart)
 }
 \arguments{
 \item{ensg.diff.exp}{input}

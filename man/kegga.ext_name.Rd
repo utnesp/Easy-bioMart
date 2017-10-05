@@ -4,7 +4,8 @@
 \alias{kegga.ext_name}
 \title{Biomart conversion}
 \usage{
-kegga.ext_name(ext_name.diff.exp, ensg.universe = F, biomart = mart)
+\method{kegga}{ext_name}(ext_name.diff.exp, ensg.universe = F,
+  biomart = mart)
 }
 \arguments{
 \item{ext_name.diff.exp}{input}

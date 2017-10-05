@@ -4,7 +4,8 @@
 \alias{goana.ext_name}
 \title{Biomart conversion}
 \usage{
-goana.ext_name(ext_name.diff.exp, ensg.universe = F, biomart = mart)
+\method{goana}{ext_name}(ext_name.diff.exp, ensg.universe = F,
+  biomart = mart)
 }
 \arguments{
 \item{ext_name.diff.exp}{input}

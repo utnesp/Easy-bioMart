@@ -5,9 +5,9 @@
 \alias{kegga.ensg}
 \title{Biomart conversion}
 \usage{
-kegga.ensg(ensg.diff.exp, ensg.universe = F, biomart = mart)
+\method{kegga}{ensg}(ensg.diff.exp, ensg.universe = F, biomart = mart)
 
-kegga.ensg(ensg.diff.exp, ensg.universe = F, biomart = mart)
+\method{kegga}{ensg}(ensg.diff.exp, ensg.universe = F, biomart = mart)
 }
 \arguments{
 \item{ensg.diff.exp}{input}

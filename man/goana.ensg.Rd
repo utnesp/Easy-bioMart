@@ -4,9 +4,9 @@
 \alias{goana.ensg}
 \title{Biomart conversion}
 \usage{
-goana.ensg(ensg.diff.exp, ensg.universe = F, biomart = mart, pval = "",
-  ont = "", combine = F, df2 = "", by.x = "ensembl_gene_id",
-  by.y = "ensembl_gene_id", all = F)
+\method{goana}{ensg}(ensg.diff.exp, ensg.universe = F, biomart = mart,
+  pval = "", ont = "", combine = F, df2 = "",
+  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
 }
 \arguments{
 \item{ensg.diff.exp}{input}
