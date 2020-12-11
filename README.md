@@ -4,11 +4,10 @@ Provide some functions to make biomart easier to handle
 # Installation
 ```R
 library(devtools)
-source("http://bioconductor.org/biocLite.R")
 # install the limma package and ReactomaPA if not already installed (used in gene set enrichment analysis)
-if (!library(biomaRt, logical.return = T)) biocLite("biomaRt")
-if (!library(limma, logical.return = T)) biocLite("limma")
-if (!library(ReactomePA, logical.return = T)) biocLite("ReactomePA")
+if (!library(biomaRt, logical.return = T)) BiocManager::install("biomaRt")
+if (!library(limma, logical.return = T)) BiocManager::install("limma")
+if (!library(ReactomePA, logical.return = T)) BiocManager::install("ReactomePA")
 devtools::install_github("utnesp/Easy-bioMart")
 library(easybiomart)
 ```
