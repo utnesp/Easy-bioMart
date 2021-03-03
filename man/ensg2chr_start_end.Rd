@@ -4,12 +4,22 @@
 \alias{ensg2chr_start_end}
 \title{Biomart conversion}
 \usage{
-ensg2chr_start_end(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F,
-  as.IGV = F)
+ensg2chr_start_end(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = F,
+  as.IGV = F
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2chr_start_end()

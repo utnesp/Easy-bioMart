@@ -2,19 +2,35 @@
 % Please edit documentation in R/easybiomart.R
 \name{entrez2ext_name}
 \alias{entrez2ext_name}
-\alias{entrez2ext_name}
 \title{Biomart conversion}
 \usage{
-entrez2ext_name(entrez_ids, biomart = mart, combine = F, df2 = "",
-  by.x = "entrezgene", by.y = "entrezgene", all = F)
+entrez2ext_name(
+  entrez_ids,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "entrezgene_id",
+  by.y = "entrezgene_id",
+  all = F
+)
 
-entrez2ext_name(entrez_ids, biomart = mart, combine = F, df2 = "",
-  by.x = "entrezgene", by.y = "entrezgene", all = F)
+entrez2ext_name(
+  entrez_ids,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "entrezgene_id",
+  by.y = "entrezgene_id",
+  all = F
+)
 }
 \arguments{
 \item{entrez_ids}{input}
+}
+\description{
+Biomart conversion
 
-\item{entrez_ids}{input}
+Biomart conversion
 }
 \examples{
 entrez2ext_name()

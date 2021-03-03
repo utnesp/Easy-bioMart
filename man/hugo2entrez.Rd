@@ -4,11 +4,21 @@
 \alias{hugo2entrez}
 \title{Biomart conversion}
 \usage{
-hugo2entrez(hgnc, biomart = mart, combine = F, df2 = "",
-  by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F)
+hugo2entrez(
+  hgnc,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "hgnc_symbol",
+  by.y = "hgnc_symbol",
+  all = F
+)
 }
 \arguments{
 \item{hgnc}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 hugo2entrez()

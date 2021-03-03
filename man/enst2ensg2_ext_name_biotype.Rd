@@ -4,11 +4,21 @@
 \alias{enst2ensg2_ext_name_biotype}
 \title{Biomart conversion}
 \usage{
-enst2ensg2_ext_name_biotype(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F)
+enst2ensg2_ext_name_biotype(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_transcript_id",
+  by.y = "ensembl_transcript_id",
+  all = F
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 enst2ext_name_biotype()

@@ -4,11 +4,21 @@
 \alias{enst2ensg}
 \title{Biomart conversion}
 \usage{
-enst2ensg(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_transcript_id", by.y = "ensembl_transcript_id", all = F)
+enst2ensg(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_transcript_id",
+  by.y = "ensembl_transcript_id",
+  all = F
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 enst2ensg()

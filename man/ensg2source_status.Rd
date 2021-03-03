@@ -4,11 +4,21 @@
 \alias{ensg2source_status}
 \title{Biomart conversion}
 \usage{
-ensg2source_status(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = T)
+ensg2source_status(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = T
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2source_status()

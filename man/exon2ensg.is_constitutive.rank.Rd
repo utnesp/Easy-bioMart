@@ -4,11 +4,21 @@
 \alias{exon2ensg.is_constitutive.rank}
 \title{Biomart conversion}
 \usage{
-exon2ensg.is_constitutive.rank(ense_id, biomart = mart, combine = F,
-  df2 = "", by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F)
+exon2ensg.is_constitutive.rank(
+  ense_id,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_exon_id",
+  by.y = "ensembl_exon_id",
+  all = F
+)
 }
 \arguments{
 \item{ense_id}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 exon2ensg.is_constitutive.rank()

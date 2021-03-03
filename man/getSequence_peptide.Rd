@@ -4,12 +4,19 @@
 \alias{getSequence_peptide}
 \title{get peptide sequence}
 \usage{
-getSequence_peptide(input, which.mart = mart,
-  which.type = "external_gene_name", which.seq.type = "peptide",
-  fasta.output = "")
+getSequence_peptide(
+  input,
+  which.mart = mart,
+  which.type = "external_gene_name",
+  which.seq.type = "peptide",
+  fasta.output = ""
+)
 }
 \arguments{
 \item{input}{input}
+}
+\description{
+get peptide sequence
 }
 \examples{
 getSequence_peptide()

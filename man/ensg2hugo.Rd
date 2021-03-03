@@ -4,11 +4,21 @@
 \alias{ensg2hugo}
 \title{Biomart conversion}
 \usage{
-ensg2hugo(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
+ensg2hugo(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = F
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2hugo()

@@ -4,12 +4,22 @@
 \alias{uniprot2ensg}
 \title{Biomart conversion}
 \usage{
-uniprot2ensg(uniprotswissprot, useSwissprot = T, biomart = mart,
-  combine = F, df2 = "", by.x = "uniprotswissprot",
-  by.y = "uniprotswissprot", all = F)
+uniprot2ensg(
+  uniprotswissprot,
+  useSwissprot = T,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "uniprotswissprot",
+  by.y = "uniprotswissprot",
+  all = F
+)
 }
 \arguments{
 \item{uniprotswissprot}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 uniprot2ensg()

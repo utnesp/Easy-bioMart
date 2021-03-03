@@ -4,9 +4,19 @@
 \alias{refseq2ext_name}
 \title{Biomart conversion}
 \usage{
-refseq2ext_name(refseq_ids, biomart = mart, combine = F, df2 = "",
-  by.x = "refseq", by.y = "refseq", all = F)
+refseq2ext_name(
+  refseq_ids,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "refseq",
+  by.y = "refseq",
+  all = F
+)
 }
 \arguments{
 \item{refseq_ids}{input}
+}
+\description{
+Biomart conversion
 }

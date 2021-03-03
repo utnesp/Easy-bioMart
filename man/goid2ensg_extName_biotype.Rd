@@ -4,11 +4,21 @@
 \alias{goid2ensg_extName_biotype}
 \title{Biomart conversion}
 \usage{
-goid2ensg_extName_biotype(goid, biomart = mart, combine = F, df2 = "",
-  by.x = "go_id", by.y = "go_id", all = F)
+goid2ensg_extName_biotype(
+  goid,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "go_id",
+  by.y = "go_id",
+  all = F
+)
 }
 \arguments{
 \item{goid}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 goid2ensg_extName_biotype()

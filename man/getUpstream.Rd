@@ -4,12 +4,20 @@
 \alias{getUpstream}
 \title{get upstream sequence}
 \usage{
-getUpstream(input, bp_upstream = 2000, which.mart = mart,
-  which.type = "external_gene_name", which.seq.type = "gene_flank",
-  fasta.output = "")
+getUpstream(
+  input,
+  bp_upstream = 2000,
+  which.mart = mart,
+  which.type = "external_gene_name",
+  which.seq.type = "gene_flank",
+  fasta.output = ""
+)
 }
 \arguments{
 \item{input}{input}
+}
+\description{
+get upstream sequence
 }
 \examples{
 getUpstream()

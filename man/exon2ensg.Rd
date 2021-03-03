@@ -4,11 +4,21 @@
 \alias{exon2ensg}
 \title{Biomart conversion}
 \usage{
-exon2ensg(ense_id, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_exon_id", by.y = "ensembl_exon_id", all = F)
+exon2ensg(
+  ense_id,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_exon_id",
+  by.y = "ensembl_exon_id",
+  all = F
+)
 }
 \arguments{
 \item{ense_id}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 exon2ensg()

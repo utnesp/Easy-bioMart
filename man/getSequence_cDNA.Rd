@@ -4,12 +4,19 @@
 \alias{getSequence_cDNA}
 \title{get cDNA sequence}
 \usage{
-getSequence_cDNA(input, which.mart = mart,
-  which.type = "external_gene_name", which.seq.type = "cdna",
-  fasta.output = "")
+getSequence_cDNA(
+  input,
+  which.mart = mart,
+  which.type = "external_gene_name",
+  which.seq.type = "cdna",
+  fasta.output = ""
+)
 }
 \arguments{
 \item{input}{input}
+}
+\description{
+get cDNA sequence
 }
 \examples{
 getSequence_cDNA()

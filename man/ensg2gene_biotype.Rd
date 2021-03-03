@@ -4,11 +4,21 @@
 \alias{ensg2gene_biotype}
 \title{Biomart conversion}
 \usage{
-ensg2gene_biotype(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
+ensg2gene_biotype(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = F
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2gene_biotype()

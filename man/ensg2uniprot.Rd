@@ -4,11 +4,21 @@
 \alias{ensg2uniprot}
 \title{Biomart conversion}
 \usage{
-ensg2uniprot(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F)
+ensg2uniprot(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = F
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2uniprot()

@@ -4,11 +4,19 @@
 \alias{getSequence_3UTR}
 \title{get 3' UTR sequence}
 \usage{
-getSequence_3UTR(ensg, which.mart = mart, which.type = "ensembl_gene_id",
-  which.seq.type = "3utr", fasta.output = "")
+getSequence_3UTR(
+  ensg,
+  which.mart = mart,
+  which.type = "ensembl_gene_id",
+  which.seq.type = "3utr",
+  fasta.output = ""
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+get 3' UTR sequence
 }
 \examples{
 getSequence_3UTR()

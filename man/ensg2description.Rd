@@ -4,12 +4,22 @@
 \alias{ensg2description}
 \title{Biomart conversion}
 \usage{
-ensg2description(ensg, biomart = mart, combine = F, df2 = "",
-  by.x = "ensembl_gene_id", by.y = "ensembl_gene_id", all = F,
-  remove.bracket.info = T)
+ensg2description(
+  ensg,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = F,
+  remove.bracket.info = T
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2description()

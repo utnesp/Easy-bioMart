@@ -4,11 +4,19 @@
 \alias{getSequence_5UTR}
 \title{get 5' UTR sequence}
 \usage{
-getSequence_5UTR(ensg, which.mart = mart, which.type = "ensembl_gene_id",
-  which.seq.type = "5utr", fasta.output = "")
+getSequence_5UTR(
+  ensg,
+  which.mart = mart,
+  which.type = "ensembl_gene_id",
+  which.seq.type = "5utr",
+  fasta.output = ""
+)
 }
 \arguments{
 \item{ensg}{input}
+}
+\description{
+get 5' UTR sequence
 }
 \examples{
 getSequence_5UTR()

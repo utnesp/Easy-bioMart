@@ -4,11 +4,21 @@
 \alias{ext_name2enst}
 \title{Biomart conversion}
 \usage{
-ext_name2enst(ext_name, biomart = mart, combine = F, df2 = "",
-  by.x = "external_gene_name", by.y = "external_gene_name", all = F)
+ext_name2enst(
+  ext_name,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "external_gene_name",
+  by.y = "external_gene_name",
+  all = F
+)
 }
 \arguments{
 \item{ext_name}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ext_name2enst()

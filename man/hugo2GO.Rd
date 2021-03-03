@@ -4,11 +4,21 @@
 \alias{hugo2GO}
 \title{Biomart conversion}
 \usage{
-hugo2GO(ext_name, biomart = mart, combine = F, df2 = "",
-  by.x = "external_gene_name", by.y = "external_gene_name", all = F)
+hugo2GO(
+  ext_name,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "external_gene_name",
+  by.y = "external_gene_name",
+  all = F
+)
 }
 \arguments{
 \item{ext_name}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 hugo2GO()

@@ -4,12 +4,21 @@
 \alias{enst2ensg.extName.with.version}
 \title{Biomart conversion}
 \usage{
-enst2ensg.extName.with.version(enst = NULL, biomart = mart, combine = F,
-  df2 = "", by.x = "ensembl_transcript_id",
-  by.y = "ensembl_transcript_id", all = F)
+enst2ensg.extName.with.version(
+  enst = NULL,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_transcript_id",
+  by.y = "ensembl_transcript_id",
+  all = F
+)
 }
 \arguments{
 \item{enst}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 enst2ensg()

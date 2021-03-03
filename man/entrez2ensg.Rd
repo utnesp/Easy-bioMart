@@ -4,11 +4,21 @@
 \alias{entrez2ensg}
 \title{Biomart conversion}
 \usage{
-entrez2ensg(entrez_ids, biomart = mart, combine = F, df2 = "",
-  by.x = "entrezgene", by.y = "entrezgene", all = F)
+entrez2ensg(
+  entrez_ids,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "entrezgene_id",
+  by.y = "entrezgene_id",
+  all = F
+)
 }
 \arguments{
 \item{entrez_ids}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 entrez2ensg()

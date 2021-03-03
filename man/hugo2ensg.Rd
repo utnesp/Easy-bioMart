@@ -4,11 +4,21 @@
 \alias{hugo2ensg}
 \title{Convert hugo names to ensembl gene identifiers}
 \usage{
-hugo2ensg(hgnc, biomart = mart, combine = F, df2 = "",
-  by.x = "hgnc_symbol", by.y = "hgnc_symbol", all = F)
+hugo2ensg(
+  hgnc,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "hgnc_symbol",
+  by.y = "hgnc_symbol",
+  all = F
+)
 }
 \arguments{
 \item{hgnc}{input}
+}
+\description{
+Convert hugo names to ensembl gene identifiers
 }
 \examples{
 hugo2ensg()

@@ -4,12 +4,23 @@
 \alias{ensg2entrez_fc}
 \title{Biomart conversion}
 \usage{
-ensg2entrez_fc(df, ensg_col = row.names(df), fc_col = "log2FC",
-  biomart = mart, combine = F, df2 = "", by.x = "ensembl_gene_id",
-  by.y = "ensembl_gene_id", all = F)
+ensg2entrez_fc(
+  df,
+  ensg_col = row.names(df),
+  fc_col = "log2FC",
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "ensembl_gene_id",
+  by.y = "ensembl_gene_id",
+  all = F
+)
 }
 \arguments{
 \item{df}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ensg2entrez_fc()

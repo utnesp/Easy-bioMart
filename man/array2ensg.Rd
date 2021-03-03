@@ -4,9 +4,20 @@
 \alias{array2ensg}
 \title{Biomart conversion}
 \usage{
-array2ensg(array_ids, array = NULL, biomart = mart, combine = F,
-  df2 = "", by.x = array, by.y = array, all = F)
+array2ensg(
+  array_ids,
+  array = NULL,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = array,
+  by.y = array,
+  all = F
+)
 }
 \arguments{
 \item{array_ids}{input}
+}
+\description{
+Biomart conversion
 }

@@ -4,11 +4,21 @@
 \alias{ext_name2chr_band_df}
 \title{Biomart conversion}
 \usage{
-ext_name2chr_band_df(df, biomart = mart, combine = F, df2 = "",
-  by.x = "external_gene_name", by.y = "external_gene_name", all = F)
+ext_name2chr_band_df(
+  df,
+  biomart = mart,
+  combine = F,
+  df2 = "",
+  by.x = "external_gene_name",
+  by.y = "external_gene_name",
+  all = F
+)
 }
 \arguments{
 \item{df}{input}
+}
+\description{
+Biomart conversion
 }
 \examples{
 ext_name2chr_band_df()
