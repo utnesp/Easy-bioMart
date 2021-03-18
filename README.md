@@ -3,12 +3,15 @@ Provide some functions to make biomart easier to handle
 
 # Installation
 ```R
-library(devtools)
-# install the limma package and ReactomaPA if not already installed (used in gene set enrichment analysis)
+# install required packages
+if (!library(devtools, logical.return = T)) BiocManager::install("devtools")
 if (!library(biomaRt, logical.return = T)) BiocManager::install("biomaRt")
 if (!library(limma, logical.return = T)) BiocManager::install("limma")
 if (!library(ReactomePA, logical.return = T)) BiocManager::install("ReactomePA")
+if (!library(GenomicRanges, logical.return = T)) BiocManager::install("GenomicRanges")
+if (!library(doParallel, logical.return = T)) BiocManager::install("doParallel")
 devtools::install_github("utnesp/Easy-bioMart")
+
 library(easybiomart)
 ```
 
